@@ -32,3 +32,8 @@ export async function update(id: number, name: string, bio: string, bornAt: Date
   const count = await knex.from('actor').where({ id }).update({ name, bio, bornAt })
   return count > 0
 }
+
+/** @returns characters names for a specific actor */
+export function actorCharacters(actorId: number): Promise<any[]> {
+  return knex.from('movie_character').select('movie_character.name').where('movie_character.actorId', actorId)
+}

@@ -5,7 +5,7 @@ import sinon from 'sinon'
 export const lab = script()
 const { beforeEach, before, after, afterEach, describe, it } = lab
 
-import { list, find, remove, create, update } from './actors'
+import { list, find, remove, create, update, actorCharacters } from './actors'
 import { knex } from '../util/knex'
 
 describe('lib', () => describe('actor', () => {
@@ -189,6 +189,19 @@ describe('lib', () => describe('actor', () => {
       const result = await create(anyName, anyBio, anyBornAt)
       expect(result).to.be.number()
       expect(result).equals(anyId)
+    })
+
+  })
+
+  describe('actorCharacters', () => {
+
+    it('returns characters for a specific actor`', async ({context}: Flags) => {
+      if(!isContext(context)) throw TypeError()
+      const anyActorId= 123
+
+      const result = await actorCharacters(anyActorId)
+      sinon.assert.calledOnceWithExactly(context.stub.knex_from, 'movie_character')
+      sinon.assert.calledOnce(context.stub.knex_select)
     })
 
   })
