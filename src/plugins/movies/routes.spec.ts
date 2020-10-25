@@ -97,7 +97,7 @@ describe('plugin', () => describe('movie', () => {
 
     it('returns HTTP 409 when given `name` already exists', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
-      const payload = { 'name': 'repeated-name', 'synopsis': 'repeated-synopsis', 'releaseAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }
+      const payload = { 'name': 'repeated-name', 'synopsis': 'repeated-synopsis', 'releasedAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }
       const opts: Hapi.ServerInjectOptions = { method, url, payload }
       context.stub.lib_create.rejects({ code: 'ER_DUP_ENTRY' })
 
@@ -107,7 +107,7 @@ describe('plugin', () => describe('movie', () => {
 
     it('returns HTTP 201, with the `id` and `path` to the row created', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
-      const payload = { 'name': 'any-name', 'synopsis': 'repeated-synopsis', 'releaseAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }
+      const payload = { 'name': 'any-name', 'synopsis': 'repeated-synopsis', 'releasedAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }
       const opts: Hapi.ServerInjectOptions = { method, url, payload }
       const anyResult = 123
       context.stub.lib_create.resolves(anyResult)
@@ -115,7 +115,7 @@ describe('plugin', () => describe('movie', () => {
       const response = await context.server.inject(opts)
       expect(response.statusCode).equals(201)
 
-      sinon.assert.calledOnceWithExactly(context.stub.lib_create, payload.name, payload.synopsis, payload.releaseAt, payload.runtime, payload.genreId)
+      sinon.assert.calledOnceWithExactly(context.stub.lib_create, payload.name, payload.synopsis, payload.releasedAt, payload.runtime, payload.genreId)
       expect(response.result).equals({
         id: anyResult,
         path: `/movies/${anyResult}`
@@ -162,7 +162,7 @@ describe('plugin', () => describe('movie', () => {
 
   describe('PUT /movies/:id', () => {
     const paramId = 123
-    const [method, url, payload] = ['PUT', `/movies/${paramId}`, { 'name': 'any-name', 'synopsis': 'repeated-synopsis', 'releaseAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }]
+    const [method, url, payload] = ['PUT', `/movies/${paramId}`, { 'name': 'any-name', 'synopsis': 'repeated-synopsis', 'releasedAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }]
 
     it('validates payload is not empty', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
@@ -207,7 +207,7 @@ describe('plugin', () => describe('movie', () => {
       const response = await context.server.inject(opts)
       expect(response.statusCode).equals(204)
 
-      sinon.assert.calledOnceWithExactly(context.stub.lib_update, paramId, payload.name, payload.synopsis, payload.releaseAt, payload.runtime, payload.genreId)
+      sinon.assert.calledOnceWithExactly(context.stub.lib_update, paramId, payload.name, payload.synopsis, payload.releasedAt, payload.runtime, payload.genreId)
       expect(response.result).to.be.null()
     })
 

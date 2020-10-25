@@ -113,15 +113,15 @@ describe('lib', () => describe('movie', () => {
       if(!isContext(context)) throw TypeError()
       const anyName = 'any-name'
       const anySynopsis = 'any-synopsis'
-      const anyReleaseAt = new Date('1988-04-27') // any date
+      const anyReleasedAt = new Date('1988-04-27') // any date
       const anyRuntime = 120
       const anyGenreId = 1
       context.stub.knex_update.resolves()
 
-      await update(anyId, anyName, anySynopsis, anyReleaseAt, anyRuntime, anyGenreId)
+      await update(anyId, anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
       sinon.assert.calledOnceWithExactly(context.stub.knex_from, 'movie')
       sinon.assert.calledOnceWithExactly(context.stub.knex_where, { id: anyId })
-      sinon.assert.calledOnceWithExactly(context.stub.knex_update, { name: anyName, synopsis: anySynopsis, releaseAt: anyReleaseAt, runtime: anyRuntime, genreId: anyGenreId })
+      sinon.assert.calledOnceWithExactly(context.stub.knex_update, { name: anyName, synopsis: anySynopsis, releasedAt: anyReleasedAt, runtime: anyRuntime, genreId: anyGenreId })
     })
 
     ; [0, 1].forEach( rows =>
@@ -130,12 +130,12 @@ describe('lib', () => describe('movie', () => {
         const anyId = 123
         const anyName = 'any-name'
         const anySynopsis = 'any-synopsis'
-        const anyReleaseAt = new Date('1988-04-27') // any date
+        const anyReleasedAt = new Date('1988-04-27') // any date
         const anyRuntime = 120
         const anyGenreId = 1
         context.stub.knex_update.resolves(rows)
 
-        const result = await update(anyId, anyName, anySynopsis, anyReleaseAt, anyRuntime, anyGenreId)
+        const result = await update(anyId, anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
         expect(result).to.be.boolean()
         expect(result).equals(!!rows)
       }))
@@ -174,14 +174,14 @@ describe('lib', () => describe('movie', () => {
       if(!isContext(context)) throw TypeError()
       const anyName = 'any-name'
       const anySynopsis = 'any-synopsis'
-      const anyReleaseAt = new Date('1988-04-27') // any date
+      const anyReleasedAt = new Date('1988-04-27') // any date
       const anyRuntime = 120
       const anyGenreId = 1
       context.stub.knex_insert.resolves([])
 
-      await create(anyName, anySynopsis, anyReleaseAt, anyRuntime, anyGenreId)
+      await create(anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
       sinon.assert.calledOnceWithExactly(context.stub.knex_into, 'movie')
-      sinon.assert.calledOnceWithExactly(context.stub.knex_insert, { name: anyName, synopsis: anySynopsis, releaseAt: anyReleaseAt, runtime: anyRuntime, genreId: anyGenreId })
+      sinon.assert.calledOnceWithExactly(context.stub.knex_insert, { name: anyName, synopsis: anySynopsis, releasedAt: anyReleasedAt, runtime: anyRuntime, genreId: anyGenreId })
     })
 
     it('returns the `id` created for the new row', async ({context}: Flags) => {
@@ -189,12 +189,12 @@ describe('lib', () => describe('movie', () => {
       const anyId = 123
       const anyName = 'any-name'
       const anySynopsis = 'any-synopsis'
-      const anyReleaseAt = new Date('1988-04-27') // any date
+      const anyReleasedAt = new Date('1988-04-27') // any date
       const anyRuntime = 120
       const anyGenreId = 1
       context.stub.knex_insert.resolves([anyId])
 
-      const result = await create(anyName, anySynopsis, anyReleaseAt, anyRuntime, anyGenreId)
+      const result = await create(anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
       expect(result).to.be.number()
       expect(result).equals(anyId)
     })

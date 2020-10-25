@@ -4,9 +4,9 @@ export interface Movie {
   id: number
   name: string
   synopsis?: string
-  releaseAt: Date
+  releasedAt: Date
   runtime: number
-  genreId:number
+  genreId: number
 }
 
 export function list(): Promise<Movie[]> {
@@ -24,13 +24,13 @@ export async function remove(id: number): Promise<boolean> {
 }
 
 /** @returns the ID that was created */
-export async function create(name: string, synopsis: string, releaseAt: Date, runtime: number, genreId: number): Promise<number> {
-  const [ id ] = await (knex.into('movie').insert({ name, synopsis, releaseAt,runtime, genreId }))
+export async function create(name: string, synopsis: string, releasedAt: Date, runtime: number, genreId: number): Promise<number> {
+  const [id] = await (knex.into('movie').insert({ name, synopsis, releasedAt, runtime, genreId }))
   return id
 }
 
 /** @returns whether the ID was actually found */
-export async function update(id: number, name: string, synopsis: string, releaseAt: Date, runtime: number, genreId: number): Promise<boolean>  {
-  const count = await knex.from('movie').where({ id }).update({ name, synopsis, releaseAt, runtime, genreId})
+export async function update(id: number, name: string, synopsis: string, releasedAt: Date, runtime: number, genreId: number): Promise<boolean> {
+  const count = await knex.from('movie').where({ id }).update({ name, synopsis, releasedAt, runtime, genreId })
   return count > 0
 }
