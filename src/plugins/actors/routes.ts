@@ -60,6 +60,21 @@ export const actorRoutes: ServerRoute[] = [{
   path: '/actors/{id}',
   handler: remove,
   options: { validate: validateParamsId },
+},{
+  method: 'GET',
+  path: '/actorMovies/{id}',
+  handler: getActorMovies,
+  options: { validate: validateParamsId },
+},{
+  method: 'GET',
+  path: '/actorFavoriteGenre/{id}',
+  handler: getActorFavoriteGenre,
+  options: { validate: validateParamsId },
+},{
+  method: 'GET',
+  path: '/actorCharacters/{id}',
+  handler: getActorCharacters,
+  options: { validate: validateParamsId },
 },]
 
 
@@ -71,6 +86,27 @@ async function get(req: Request, _h: ResponseToolkit, _err?: Error): Promise<Lif
   const { id } = (req.params as ParamsId)
 
   const found = await actors.find(id)
+  return found || Boom.notFound()
+}
+
+async function getActorMovies(req: Request, _h: ResponseToolkit, _err?: Error): Promise<Lifecycle.ReturnValue> {
+  const { id } = (req.params as ParamsId)
+
+  const found = await actors.actorMovies(id)
+  return found || Boom.notFound()
+}
+
+async function getActorFavoriteGenre(req: Request, _h: ResponseToolkit, _err?: Error): Promise<Lifecycle.ReturnValue> {
+  const { id } = (req.params as ParamsId)
+
+  const found = await actors.actorFavoriteGenre(id)
+  return found || Boom.notFound()
+}
+
+async function getActorCharacters(req: Request, _h: ResponseToolkit, _err?: Error): Promise<Lifecycle.ReturnValue> {
+  const { id } = (req.params as ParamsId)
+
+  const found = await actors.actorCharacters(id)
   return found || Boom.notFound()
 }
 
