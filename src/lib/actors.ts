@@ -1,4 +1,5 @@
 import { knex } from '../util/knex'
+import { Movie } from './movies'
 
 export interface Actor {
   id: number
@@ -31,6 +32,14 @@ export async function create(name: string, bio: string, bornAt: Date): Promise<n
 export async function update(id: number, name: string, bio: string, bornAt: Date): Promise<boolean>  {
   const count = await knex.from('actor').where({ id }).update({ name, bio, bornAt })
   return count > 0
+}
+
+/** @returns List of movies for a specific actor */
+export async function actorMovies(actorId: number): Promise<Movie[]> {
+  return knex.table('movie'
+  ).select('movie.name', 'movie.synopsis', 'movie.releasedAt', 'movie.runtime'
+  ).innerJoin('movie_character', 'movie.id', 'movie_character.movieId'
+  ).where('movie_character.actorId', actorId)
 }
 
 /** @returns characters names for a specific actor */
