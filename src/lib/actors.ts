@@ -42,6 +42,20 @@ export async function actorMovies(actorId: number): Promise<Movie[]> {
   ).where('movie_character.actorId', actorId)
 }
 
+/** @returns actor favorite genre */
+export function  actorFavoriteGenre(actorId: number): Promise<any[]> {
+  return knex
+  .select('genre.name')
+  .count('genre.name as genreCount')
+  .from('genre')
+  .innerJoin('movie', 'genre.id','movie.genreId')
+  .innerJoin('movie_character', 'movie.id', 'movie_character.movieId')
+  .where('movie_character.actorId', actorId)
+  .groupBy('genre.name')
+  .orderBy('genreCount', 'desc')
+  .limit(1)
+}
+
 /** @returns characters names for a specific actor */
 export function actorCharacters(actorId: number): Promise<any[]> {
   return knex.from('movie_character').select('movie_character.name').where('movie_character.actorId', actorId)

@@ -5,7 +5,7 @@ import sinon from 'sinon'
 export const lab = script()
 const { beforeEach, before, after, afterEach, describe, it } = lab
 
-import { list, find, remove, create, update, actorMovies, actorCharacters } from './actors'
+import { list, find, remove, create, update, actorMovies, actorFavoriteGenre, actorCharacters } from './actors'
 import { knex } from '../util/knex'
 
 describe('lib', () => describe('actor', () => {
@@ -200,6 +200,18 @@ describe('lib', () => describe('actor', () => {
       const anyActorId = 123
 
       const result = await actorMovies(anyActorId)
+      expect(result).to.be.array()
+    })
+
+  })
+
+  describe('actorFavoriteGenre', () => {
+
+    it('returns actor favorite genre', async ({context}: Flags) => {
+      if(!isContext(context)) throw TypeError()
+      const anyActorId = 123
+
+      const result = await actorFavoriteGenre(anyActorId)
       expect(result).to.be.array()
     })
 
