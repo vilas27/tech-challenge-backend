@@ -3,6 +3,7 @@ import { health } from './health'
 import { genre } from './genres'
 import { actor } from './actors'
 import { movie } from './movies'
+import { character } from './characters'
 
 export const plugins: Plugin<void>[] =
 [
@@ -10,4 +11,5 @@ export const plugins: Plugin<void>[] =
   genre,
   actor,
   movie,
+  character,
 ]
