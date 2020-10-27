@@ -95,7 +95,7 @@ describe('plugin', () => describe('movie', () => {
       expect(response.statusCode).equals(400)
     })
 
-    it('returns HTTP 409 when given `name` already exists', async ({ context }: Flags) => {
+    it('returns HTTP 409 when given `name` and `releasedAt` already exists', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
       const payload = { 'name': 'repeated-name', 'synopsis': 'repeated-synopsis', 'releasedAt': new Date('1988-04-27'), 'runtime': 120, 'genreId': 1 }
       const opts: Hapi.ServerInjectOptions = { method, url, payload }
@@ -189,7 +189,7 @@ describe('plugin', () => describe('movie', () => {
       expect(response.statusCode).equals(404)
     })
 
-    it('returns HTTP 409 when given `name` already exists', async ({ context }: Flags) => {
+    it('returns HTTP 409 when given `name` and `releasedAt` already exists', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
       const opts: Hapi.ServerInjectOptions = { method, url, payload }
       context.stub.lib_update.rejects({ code: 'ER_DUP_ENTRY' })

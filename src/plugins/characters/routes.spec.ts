@@ -95,7 +95,7 @@ describe('plugin', () => describe('character', () => {
       expect(response.statusCode).equals(400)
     })
 
-    it('returns HTTP 409 when given `name` already exists', async ({ context }: Flags) => {
+    it('returns HTTP 409 when given character (`name`, `movieId` and `actorId`) already exists', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
       const payload = { 'name': 'repeated-name', 'movieId': 1, 'actorId': 1 }
       const opts: Hapi.ServerInjectOptions = { method, url, payload }
@@ -189,7 +189,7 @@ describe('plugin', () => describe('character', () => {
       expect(response.statusCode).equals(404)
     })
 
-    it('returns HTTP 409 when given `name` already exists', async ({ context }: Flags) => {
+    it('returns HTTP 409 when given character (`name`, `movieId` and `actorId`) already exists', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
       const opts: Hapi.ServerInjectOptions = { method, url, payload }
       context.stub.lib_update.rejects({ code: 'ER_DUP_ENTRY' })

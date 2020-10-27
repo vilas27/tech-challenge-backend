@@ -59,7 +59,7 @@ describe('plugin', () => describe('movie_and_characters', () => {
   describe('GET /movieAndCharacters', () => {
     const [method, url] = ['GET', '/movieAndCharacters']
 
-    it('returns all movies and characters', async ({ context }: Flags) => {
+    it('returns all movies and their characters', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
       const opts: Hapi.ServerInjectOptions = { method, url }
       const anyResult = [{ 'any': 'result' }]
@@ -143,7 +143,7 @@ describe('plugin', () => describe('movie_and_characters', () => {
       expect(response.statusCode).equals(404)
     })
 
-    it('returns one movie_and_characters', async ({ context }: Flags) => {
+    it('returns one movie and respectives characters', async ({ context }: Flags) => {
       if (!isContext(context)) throw TypeError()
       const opts: Hapi.ServerInjectOptions = { method, url }
       const anyResult = { 'any': 'result' }
