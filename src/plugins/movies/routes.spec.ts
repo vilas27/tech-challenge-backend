@@ -115,7 +115,7 @@ describe('plugin', () => describe('movie', () => {
       const response = await context.server.inject(opts)
       expect(response.statusCode).equals(201)
 
-      sinon.assert.calledOnceWithExactly(context.stub.lib_create, payload.name, payload.synopsis, payload.releasedAt, payload.runtime, payload.genreId)
+      sinon.assert.calledOnceWithExactly(context.stub.lib_create, payload.name, payload.releasedAt, payload.runtime, payload.genreId, payload.synopsis)
       expect(response.result).equals({
         id: anyResult,
         path: `/movies/${anyResult}`
@@ -207,7 +207,7 @@ describe('plugin', () => describe('movie', () => {
       const response = await context.server.inject(opts)
       expect(response.statusCode).equals(204)
 
-      sinon.assert.calledOnceWithExactly(context.stub.lib_update, paramId, payload.name, payload.synopsis, payload.releasedAt, payload.runtime, payload.genreId)
+      sinon.assert.calledOnceWithExactly(context.stub.lib_update, paramId, payload.name, payload.releasedAt, payload.runtime, payload.genreId, payload.synopsis)
       expect(response.result).to.be.null()
     })
 

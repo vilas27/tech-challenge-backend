@@ -24,13 +24,13 @@ export async function remove(id: number): Promise<boolean> {
 }
 
 /** @returns the ID that was created */
-export async function create(name: string, synopsis: string, releasedAt: Date, runtime: number, genreId: number): Promise<number> {
+export async function create(name: string, releasedAt: Date, runtime: number, genreId: number, synopsis?: string): Promise<number> {
   const [id] = await (knex.into('movie').insert({ name, synopsis, releasedAt, runtime, genreId }))
   return id
 }
 
 /** @returns whether the ID was actually found */
-export async function update(id: number, name: string, synopsis: string, releasedAt: Date, runtime: number, genreId: number): Promise<boolean> {
+export async function update(id: number, name: string, releasedAt: Date, runtime: number, genreId: number, synopsis?: string): Promise<boolean> {
   const count = await knex.from('movie').where({ id }).update({ name, synopsis, releasedAt, runtime, genreId })
   return count > 0
 }

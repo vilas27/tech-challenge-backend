@@ -118,10 +118,10 @@ describe('lib', () => describe('movie', () => {
       const anyGenreId = 1
       context.stub.knex_update.resolves()
 
-      await update(anyId, anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
+      await update(anyId, anyName, anyReleasedAt, anyRuntime, anyGenreId, anySynopsis)
       sinon.assert.calledOnceWithExactly(context.stub.knex_from, 'movie')
       sinon.assert.calledOnceWithExactly(context.stub.knex_where, { id: anyId })
-      sinon.assert.calledOnceWithExactly(context.stub.knex_update, { name: anyName, synopsis: anySynopsis, releasedAt: anyReleasedAt, runtime: anyRuntime, genreId: anyGenreId })
+      sinon.assert.calledOnceWithExactly(context.stub.knex_update, { name: anyName, releasedAt: anyReleasedAt, runtime: anyRuntime, genreId: anyGenreId, synopsis: anySynopsis })
     })
 
     ; [0, 1].forEach( rows =>
@@ -135,7 +135,7 @@ describe('lib', () => describe('movie', () => {
         const anyGenreId = 1
         context.stub.knex_update.resolves(rows)
 
-        const result = await update(anyId, anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
+        const result = await update(anyId, anyName, anyReleasedAt, anyRuntime, anyGenreId, anySynopsis)
         expect(result).to.be.boolean()
         expect(result).equals(!!rows)
       }))
@@ -179,9 +179,9 @@ describe('lib', () => describe('movie', () => {
       const anyGenreId = 1
       context.stub.knex_insert.resolves([])
 
-      await create(anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
+      await create(anyName, anyReleasedAt, anyRuntime, anyGenreId, anySynopsis)
       sinon.assert.calledOnceWithExactly(context.stub.knex_into, 'movie')
-      sinon.assert.calledOnceWithExactly(context.stub.knex_insert, { name: anyName, synopsis: anySynopsis, releasedAt: anyReleasedAt, runtime: anyRuntime, genreId: anyGenreId })
+      sinon.assert.calledOnceWithExactly(context.stub.knex_insert, { name: anyName, releasedAt: anyReleasedAt, runtime: anyRuntime, genreId: anyGenreId, synopsis: anySynopsis })
     })
 
     it('returns the `id` created for the new row', async ({context}: Flags) => {
@@ -194,7 +194,7 @@ describe('lib', () => describe('movie', () => {
       const anyGenreId = 1
       context.stub.knex_insert.resolves([anyId])
 
-      const result = await create(anyName, anySynopsis, anyReleasedAt, anyRuntime, anyGenreId)
+      const result = await create(anyName, anyReleasedAt, anyRuntime, anyGenreId, anySynopsis)
       expect(result).to.be.number()
       expect(result).equals(anyId)
     })

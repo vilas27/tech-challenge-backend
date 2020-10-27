@@ -24,7 +24,7 @@ const validateParamsId: RouteOptionsValidate = {
 
 interface PayloadMovie {
   name: string
-  synopsis: string
+  synopsis?: string
   releasedAt: Date
   runtime: number
   genreId: number
@@ -82,7 +82,7 @@ async function post(req: Request, h: ResponseToolkit, _err?: Error): Promise<Lif
   const { name, synopsis, releasedAt, runtime, genreId } = (req.payload as PayloadMovie)
 
   try {
-    const id = await movies.create(name, synopsis, releasedAt, runtime, genreId)
+    const id = await movies.create(name, releasedAt, runtime, genreId, synopsis)
     const result = {
       id,
       path: `${req.route.path}/${id}`
@@ -100,7 +100,7 @@ async function put(req: Request, h: ResponseToolkit, _err?: Error): Promise<Life
   const { name, synopsis, releasedAt, runtime, genreId  } = (req.payload as PayloadMovie)
 
   try {
-    return await movies.update(id, name, synopsis, releasedAt, runtime, genreId ) ? h.response().code(204) : Boom.notFound()
+    return await movies.update(id, name, releasedAt, runtime, genreId, synopsis ) ? h.response().code(204) : Boom.notFound()
   }
   catch(er: unknown){
     if(!isHasCode(er) || er.code !== 'ER_DUP_ENTRY') throw er
