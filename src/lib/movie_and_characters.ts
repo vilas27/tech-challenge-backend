@@ -6,6 +6,7 @@ export interface MovieAndCharacters {
   characters: characters.Character[]
 }
 
+/** @returns list of movies and their characters*/
 export async function list(): Promise<MovieAndCharacters[]> {
   const movies_and_characters = []
   for (const movie of await movies.list()) {
@@ -15,13 +16,14 @@ export async function list(): Promise<MovieAndCharacters[]> {
   return movies_and_characters
 }
 
+/** @returns movie the respective characters */
 export async function find(id: number): Promise<MovieAndCharacters> {
   const movie = await movies.find(id)
   const characters_in = await characters.findByMovieId(id)
   return { 'movie': movie, 'characters': characters_in }
 }
 
-/** @returns whether the ID was actually found */
+/** @returns whether the movie ID was actually found */
 export async function remove(id: number): Promise<boolean> {
   let count = await characters.removeByMovieId(id)
   if (count == true) {
@@ -30,7 +32,7 @@ export async function remove(id: number): Promise<boolean> {
   return count
 }
 
-/** @returns the ID that was created */
+/** @returns the movie ID that was created */
 export async function create(data: MovieAndCharacters): Promise<number> {
   const id = await movies.create(data.movie.name, data.movie.releasedAt, data.movie.runtime, data.movie.genreId, data.movie.synopsis)
   for (const character of data.characters) {
@@ -39,7 +41,7 @@ export async function create(data: MovieAndCharacters): Promise<number> {
   return id
 }
 
-/** @returns whether the ID was actually found */
+/** @returns whether the movie ID was actually found */
 export async function update(data: MovieAndCharacters): Promise<boolean> {
   const result = await movies.update(data.movie.id, data.movie.name, data.movie.releasedAt, data.movie.runtime, data.movie.genreId, data.movie.synopsis)
   if (result == true) {

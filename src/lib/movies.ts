@@ -9,10 +9,12 @@ export interface Movie {
   genreId: number
 }
 
+/** @returns list of movies */
 export function list(): Promise<Movie[]> {
   return knex.from('movie').select()
 }
 
+/** @returns movie with a specific ID */
 export function find(id: number): Promise<Movie> {
   return knex.from('movie').where({ id }).first()
 }

@@ -8,10 +8,12 @@ export interface Actor {
   bornAt: Date
 }
 
+/** @returns list of actors */
 export function list(): Promise<Actor[]> {
   return knex.from('actor').select()
 }
 
+/** @returns actor with a specific ID */
 export function find(id: number): Promise<Actor> {
   return knex.from('actor').where({ id }).first()
 }

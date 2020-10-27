@@ -5,10 +5,12 @@ export interface Genre {
   name: string
 }
 
+/** @returns list of Genres */
 export function list(): Promise<Genre[]> {
   return knex.from('genre').select()
 }
 
+/** @returns genre with specific ID */
 export function find(id: number): Promise<Genre> {
   return knex.from('genre').where({ id }).first()
 }

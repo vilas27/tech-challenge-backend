@@ -7,15 +7,17 @@ export interface Character {
   actorId:number
 }
 
-
+/** @returns list of characters */
 export function list(): Promise<Character[]> {
   return knex.from('movie_character').select()
 }
 
+/** @returns  characters whit a specifict ID */
 export function find(id: number): Promise<Character[]> {
   return knex.from('movie_character').where({ id }).first()
 }
 
+/** @returns list of characters for a specific movie ID */
 export function findByMovieId(movieId: number): Promise<Character[]> {
   return knex.from('movie_character').where({ movieId })
 }
